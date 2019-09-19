@@ -1,0 +1,30 @@
+version: '2' # specify docker-compose version
+
+# Define the services/containers to be run
+services:
+  # angular: # name of the first service
+  #   build: service-config # specify the directory of the Dockerfile
+  #   ports:
+  #     - "8080:8080" # specify port forewarding
+  angular:
+    build:  
+      context: service-config
+      args:
+        NG_ENV: local
+    restart: always
+    ports:
+      - 4200:80
+
+  express: #name of the second service
+    build: backend # specify the directory of the Dockerfile
+    ports:
+      - "3000:3000" #specify ports forewarding
+    depends_on:
+      - database
+
+
+  database:
+    # name of the third service
+    image: mongo # specify image to build container from
+    ports:
+      - "27017:27017" # specify port forewarding

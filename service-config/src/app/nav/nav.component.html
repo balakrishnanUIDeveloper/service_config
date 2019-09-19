@@ -1,0 +1,12 @@
+<nav class="navbar navbar-default" *ngIf="isLogged" role="navigation">
+    <div class="navbar-header">
+        <a class="navbar-brand" routerLink="">Configuration Server</a>
+    </div>
+    <div>
+        <ul class="nav navbar-nav pull-right" *ngIf="isLogged">
+            <li routerLinkActive="active"><a routerLink="/home" href="#">Home</a></li>
+            <li routerLinkActive="active"><a routerLink="/systemConfiguration">System Configuration</a></li>
+            <li><a (click)="logout()">Logout</a></li>
+        </ul>
+    </div>
+</nav>

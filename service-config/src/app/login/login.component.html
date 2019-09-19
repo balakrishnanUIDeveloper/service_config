@@ -1,0 +1,29 @@
+<div class="login-panel">
+    <div class="text-center" style="margin: 0 0 -7px 0;">
+        <div class="login-panel-title">Configuration Server</div>
+    </div>
+
+    <div class="login-form">
+        <form name="loginForm" (ngSubmit)="submitForm(loginForm)" #loginForm="ngForm" novalidate>
+            <h2 class="text-center">Log in</h2>
+            <div class="form-error err text-center" *ngIf="formErr.loginFail">{{formErr.loginFail}}</div>
+            <div class="form-group">
+                <label class='usandpwtext'> Username</label>
+                <input type="text" class="form-control loginInput" [(ngModel)]="user.username" name="username" pattern="^[A-Za-z_]\w{3,25}$" #username="ngModel" required>
+                <span class="err h6 loginErr" *ngIf="username.touched && !username.valid">Username is invalid</span>
+            </div>
+            <div class="form-group">
+                <label class='usandpwtext'> Password</label>
+                <input type="password" class="form-control loginInput" [(ngModel)]="user.password" name="password" pattern="^[A-Za-z_]\w{3,25}$" #password="ngModel" required>
+                <span class="err h6 loginErr" *ngIf="password.touched && !password.valid">Password is invalid</span>
+            </div>
+            <div class="form-group loginBtnDiv text-center">
+                <button type="submit" class="btn btn-primary  loginBtn" [disabled]="!loginForm.valid">Log in</button>&nbsp;
+                <button type="reset" class="btn btn-default  loginBtn">Cancel</button>
+            </div>
+            <!-- <div class="clearfix">
+            <a href="#" class="pull-right">Change Password?</a>
+        </div> -->
+        </form>
+    </div>
+</div>

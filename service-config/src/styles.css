@@ -1,0 +1,11 @@
+/* You can add global styles to this file, and also import other style files */
+
+.err {
+    color: #ff0303;
+}
+
+input.ng-dirty.ng-invalid,
+select.ng-dirty.ng-invalid,
+textarea.ng-dirty.ng-invalid {
+    border-color: #ff0303;
+}

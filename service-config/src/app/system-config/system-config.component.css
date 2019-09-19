@@ -1,0 +1,70 @@
+/* fieldset.scheduler-border {
+    
+    background: -moz-linear-gradient(90deg, #CCCCCC, #FFFFFF) repeat scroll 0 0 transparent;
+    
+}
+
+legend.scheduler-border {
+    text-align: right;
+    background: -webkit-linear-gradient(90deg, #CCCCCC, #FFFFFF) repeat scroll 0 0 transparent;
+    background: -moz-linear-gradient(90deg, #CCCCCC, #FFFFFF) repeat scroll 0 0 transparent;
+    
+} */
+
+legend {
+    border: none;
+    padding: 10px;
+}
+
+fieldset.scheduler-border {
+    border: 1px groove #ddd !important;
+    padding: 0 1.4em 1.4em 1.4em !important;
+    margin: 0 0 1.5em 0 !important;
+    box-shadow: 0 0 15px #AAAAAA;
+    /* text-align: right; */
+    border-radius: 10px 10px 10px 10px;
+    box-shadow: 0 0 15px #AAAAAA;
+    padding-right: 1em;
+    padding-left: 1em;
+}
+
+
+/* legend.scheduler-border {} */
+
+.btn-css {
+    padding: 10px 32px;
+    margin-top: 10px;
+}
+
+.feild-css {
+    display: inline-block;
+    width: auto;
+    background: #fff;
+    font-weight: bold
+}
+
+.text-css {
+    font-size: 16px;
+}
+
+.panel {
+    background: #f0f5ff;
+    /* max-width: 150%; */
+}
+
+.rangeIn {
+    margin: 10px;
+}
+
+.rangeInfogroup {
+    padding: 10px
+}
+
+.strong {
+    font-weight: bold
+}
+
+.submitBtn {
+    padding: 10px 32px;
+    margin-top: 25px
+}

@@ -1,0 +1,12 @@
+.serviceConfig {
+    background: #f0f5ff;
+    /* font-family: Helvetica Neue; */
+    width: 50%;
+    padding: 2%;
+    margin-bottom: 20px
+}
+
+.addEditTitle {
+    margin-bottom: 5%;
+    border-bottom: 1px solid #ddd;
+}

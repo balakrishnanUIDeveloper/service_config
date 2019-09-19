@@ -1,0 +1,84 @@
+<div class="container-fluid home-panel">
+    <div class="table-wrapper row">
+        <div class="table-title col-sm-12">
+            <div class="row">
+                <div class="col-sm-8">
+                    <h2>Service List</h2>
+                </div>
+                <div class="col-sm-4 text-right">
+                    <button type="button" class="btn btn-primary add-new" routerLink="/serviceConfiguration/add"><i class="fa fa-plus"></i> ADD</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Service Name</th>
+                        <th>Service Description</th>
+                        <th>Service Type</th>
+                        <th>Service Modes</th>
+                        <th>Result Confirmation</th>
+                        <th>Session timeout</th>
+                        <th>Private Key Password</th>
+                        <th>Server Certificate</th>
+                        <th>Server Key</th>
+                        <th>CA ceritficate</th>
+                        <th>Verification Depth</th>
+                        <th>Client verification mode</th>
+                        <th>Use Session cache</th>
+                        <th>Session Cache timeout</th>
+                        <th>On Exceeding SoR counter</th>
+                        <th>SoR Error code</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngIf="serviceConfigData.length <= 0">
+                        <td colspan="18" class="text-center text-capitalize">
+                            <h5>no service configuration</h5>
+                        </td>
+
+                    </tr>
+                    <!-- <span *ngIf="checkData['Service Type'] == 'Steering Service'"></span> -->
+                    <tr *ngFor="let checkData of serviceConfigData">
+                        <td>{{checkData['Service Name']}}</td>
+                        <td>{{checkData['Service Description']}}</td>
+                        <td>{{checkData['Service Type']}}</td>
+                        <td><span *ngIf="checkData['Service Type'] != 'Steering Service'">{{checkData['Service Modes']}}</span></td>
+                        <td><span *ngIf="checkData['Service Type'] != 'Steering Service'">{{checkData['Result Confirmation']}}</span></td>
+                        <td><span *ngIf="checkData['Service Type'] != 'Steering Service' && checkData['Session Timeout'] != '0 Sec'">{{checkData['Session Timeout']}}</span></td>
+                        <td>{{checkData['Private Key Password']}}</td>
+                        <td>{{checkFilename(checkData['Server Certificate'])}}</td>
+                        <td>{{checkFilename(checkData['Server Key'])}}</td>
+                        <td>{{checkFilename(checkData['CA ceritficate'])}}</td>
+                        <td>{{checkData['Verification Depth']}}</td>
+                        <td>{{checkData['Client verification mode']}}</td>
+                        <td><span *ngIf="checkData['Service Type'] != 'Steering Service'  && checkData['Use Session cache']">{{checkData['Use Session cache']}}</span></td>
+                        <td><span *ngIf="checkData['Service Type'] != 'Steering Service'  && checkData['Session Cache timeout'] != '0 Sec'">{{checkData['Session Cache timeout']}}</span></td>
+                        <td>{{checkData['On Exceeding SoR counter']}}</td>
+                        <td>{{checkData['SoR Error code']}}</td>
+                        <td>
+                            <a class="edit" title="Edit" data-toggle="tooltip" [routerLink]="['/serviceConfiguration/edit', checkData._id]"><i class="fas fa-pen"></i></a>&nbsp;
+                            <a class="delete" title="Delete" data-toggle="tooltip" (click)="assignDeleteID(checkData._id)"><i class="fas fa-trash-alt"></i></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<app-popup-modal [navOut]="'/home'"></app-popup-modal>
+<div class="modal fade" id="confirmDelete" role="dialog">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h3>Are you sure to Delete ? </h3>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="confirmDelete()">OK</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clearDelete()">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>

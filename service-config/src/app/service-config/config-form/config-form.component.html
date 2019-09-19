@@ -1,0 +1,208 @@
+<div class="container-fluid serviceConfig">
+    <!-- <div class="row">
+       <div class="col-sm-8 col-sm-offset-2">
+           <h1>Service Configuration</h1>
+       </div>
+   </div> -->
+    <form name="serviceConfigForm" (ngSubmit)="onSubmit(serviceForm)" #serviceForm="ngForm" novalidate>
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2">
+                <div class="row addEditTitle">
+                    <div class="col-sm-12">
+                        <h1>Add / Edit Service Page</h1>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Service Name</label>
+                            <input type="text" class="form-control" name="Service Name" [(ngModel)]="model['Service Name']" pattern="^[a-zA-Z0-9-]+$" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Service Description</label>
+                            <textarea class="form-control" name="Service Description" [(ngModel)]="model['Service Description']" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Service Type</label>
+                            <select class="form-control" name="Service Type" [(ngModel)]="model['Service Type']" (change)="resetServiceType()" required>
+                               <option disabled selected value="">Select Option</option>
+                               <option *ngFor="let service of serviceConfigData"  [value]="service.service">
+                                   {{service.service}}
+                               </option>
+                           </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" *ngIf="!!serviceForm.form.controls['Service Type'] && serviceForm.form.controls['Service Type'].value == 'Authentication Service'">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Result Confirmation</label>
+                                    <select class="form-control" name="Result Confirmation" [(ngModel)]="model['Result Confirmation']" required>
+                                           <option disabled selected value="">Select Option</option>
+                                           <option *ngFor="let resultData of resultConfirmation"  [value]="resultData">
+                                               {{resultData}}
+                                           </option>
+                                       </select>
+                                </div>
+                                <div class="form-group" ngModelGroup="ServiceModes" #ServiceModes="ngModelGroup">
+                                    <label>Service Mode</label> &nbsp;
+                                    <div class="checkbox-inline">
+                                        <input type="checkbox" id="serviceMod1" value="EAP-TLS" name="EAP-TLS" [(ngModel)]="model.ServiceModes['EAP-TLS']" (change)="resetserviceMode()">
+                                        <label class="form-check-label" for="serviceMod1">EAP-TLS</label>
+                                    </div>
+                                    <div class="form-check checkbox-inline">
+                                        <input type="checkbox" id="serviceMod2" value="EAP-AKA" name="EAP-AKA" [(ngModel)]="model.ServiceModes['EAP-AKA']">
+                                        <label class="form-check-label" for="serviceMod2">EAP-AKA</label>
+                                    </div>
+                                    <div class="form-check checkbox-inline">
+                                        <input type="checkbox" id="serviceMod3" value="5G-AKA" name="5G-AKA" [(ngModel)]="model.ServiceModes['5G-AKA']">
+                                        <label class="form-check-label" for="serviceMod3">5G-AKA</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12" *ngIf="model.ServiceModes['EAP-TLS']">
+                                <h3>Session Configuration</h3>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <label>Service Timeout</label>
+                                        <div class="row" ngModelGroup="SessionTimeout" #SessionTimeout="ngModelGroup">
+                                            <div class="col-sm-8">
+                                                <div class="form-group">
+                                                    <input type="number" class="form-control" name="time" [(ngModel)]="model.SessionTimeout['time']" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <select class="form-control" name="format" [(ngModel)]="model.SessionTimeout['format']" required>
+                                                   <option selected value="Sec">Sec</option>
+                                                   <option value="Min">Min</option>
+                                                   <option value="Hrs">Hrs</option>
+                                                 </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="model.ServiceModes['EAP-TLS']">
+                            <div class="col-sm-12">
+                                <h3>TLS</h3>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Private Key Password</label>
+                                    <input type="password" class="form-control" name="Private Key Password" [(ngModel)]="model['Private Key Password']" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Server Certificate</label>
+                                    <!-- <input type="text" class="form-control" name="" [(ngModel)]="model['Server Certificate']"> -->
+                                    <input type="file" name="photo" name="Server Certificate" (change)="fileChange($event)" />
+                                    <ul class="list-unstyled" *ngIf="!!model['Server Certificate']">
+                                        <li>
+                                            Uploaded File: {{checkFilename(model['Server Certificate'])}}
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="form-group">
+                                    <label>Server Key</label>
+                                    <!-- <input type="text" class="form-control" name="" [(ngModel)]="model['Server Key']"> -->
+                                    <input type="file" name="photo" name="Server Key" (change)="fileChange($event)" />
+                                    <ul class="list-unstyled" *ngIf="!!model['Server Key']">
+                                        <li>
+                                            Uploaded File: {{checkFilename(model['Server Key'])}}
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="form-group">
+                                    <label>CA ceritficate</label>
+                                    <!-- <input type="text" class="form-control" name="" [(ngModel)]="model['CA ceritficate']"> -->
+                                    <input type="file" name="photo" name="CA ceritficate" (change)="fileChange($event)" />
+                                    <!-- (change)="fileChange($event)"  -->
+                                    <ul class="list-unstyled" *ngIf="!!model['CA ceritficate']">
+                                        <li>
+                                            Uploaded File: {{checkFilename(model['CA ceritficate'])}}
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Verification Depth</label>
+                                    <input type="number" class="form-control" name="Verification Depth" [(ngModel)]="model['Verification Depth']">
+                                </div>
+                                <div class="form-group">
+                                    <label>Client verification mode</label>
+                                    <select class="form-control" name="Client verification mode" [(ngModel)]="model['Client verification mode']">
+                                       <option disabled selected>Select Option</option>
+                                       <option value="None">None</option>
+                                       <option value="Client verification">Client verification</option>
+                                       <option value="Optional">Optional</option>
+                                   </select>
+                                    <!-- <input type="text " class="form-control " name="Client verification mode " [(ngModel)]="model[ 'Client verification mode'] "> -->
+                                </div>
+                                <div class="form-group ">
+                                    <label>Use Session cache</label>&nbsp;
+                                    <input type="checkbox" name="Use Session cache" [(ngModel)]="model[ 'Use Session cache']">
+                                </div>
+                                <div class="form-group " ngModelGroup="SessionCachetimeout " #SessionCachetimeout="ngModelGroup">
+                                    <label>Session Cache timeout</label>
+                                    <div class="row ">
+                                        <div class="col-sm-8 ">
+                                            <div class="form-group ">
+                                                <input type="number " class="form-control " name="time " [(ngModel)]="model.SessionCachetimeout[ 'time'] " [disabled]="!model[ 'Use Session cache'] ">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4 ">
+                                            <div class="form-group ">
+                                                <select class="form-control " name="format " [(ngModel)]="model.SessionCachetimeout[ 'format'] " [disabled]="!model[ 'Use Session cache'] ">
+                                                 <option>Sec</option>
+                                                 <option>Min</option>
+                                                 <option>Hrs</option>
+                                               </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 ">
+                                <div class="form-group ">
+                                    <label>OCSP URI</label>
+                                    <input type="text " class="form-control " name="OCSP URI " [(ngModel)]="model[ 'OCSP URI'] ">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row " *ngIf="!!serviceForm.form.controls[ 'Service Type'] && serviceForm.form.controls[ 'Service Type'].value=='Steering Service' ">
+                    <div class="col-sm-6 ">
+                        <div class="form-group ">
+                            <label>On Exceeding SoR counter</label>
+                            <select class="form-control " name="On Exceeding SoR counter " [(ngModel)]="model[ 'On Exceeding SoR counter']" required>
+                             <option disabled selected value="">Select Option</option>
+                             <option *ngFor="let sor of sorCounter "  [value]="sor">
+                                 {{sor}}
+                             </option>
+                           </select>
+                        </div>
+                        <div class="form-group ">
+                            <label>SoR Error code</label>
+                            <input type="number " class="form-control " name="SoR Error code " [disabled]="!model[ 'On Exceeding SoR counter'] || model[ 'On Exceeding SoR counter'] !='Return custom error code'" [(ngModel)]="model[ 'SoR Error code']" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col-sm-12 text-center ">
+                        <button type="submit " class="btn btn-primary" [disabled]="!serviceForm.valid">Save</button> &nbsp;
+                        <button type="reset" class="btn btn-default" (click)="cancelEdit()">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<app-popup-modal [navOut]="'/home'"></app-popup-modal>

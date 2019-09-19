@@ -1,0 +1,75 @@
+.login-panel {
+    max-width: 600px;
+    background-color: white;
+    opacity: 1.0;
+    margin-top: 125px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 2em;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.25);
+}
+
+.login-panel-title {
+    text-align: center;
+    position: relative;
+    margin-top: 2%;
+    margin-bottom: 7%;
+    font-size: 32px;
+    line-height: 1em;
+    /* font-family: CiscoSansExtraLight; */
+}
+
+.login-form h2 {
+    margin: 0 0 15px;
+}
+
+.form-control,
+.btn {
+    min-height: 35px;
+    border-radius: 2px;
+}
+
+.btn {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.usandpwtext {
+    /* float: left;
+    padding: 10px 0 0 10px;
+    width: 130px;
+    text-align: right;
+    margin-right: 6%; */
+}
+
+.loginBtn {
+    border: 1px solid transparent;
+    border-radius: 9px;
+    background: #017CAD;
+    color: #ffffff;
+    text-decoration: none;
+    /* width: 20%; */
+    text-align: center;
+    margin-top: 3%;
+}
+
+.loginBtn:hover {
+    box-shadow: 0 0 0 0 transparent;
+    color: #ffffff;
+    background-color: #01587a;
+}
+
+.loginInput {
+    /* width: 50%; */
+    /* margin-left: 2%; */
+}
+
+.loginBtnDiv {
+    /* width: 100%; */
+    /* display: inline-flex; */
+    /* text-align: center !important; */
+}
+
+.loginErr {
+    /* margin-left: 30%; */
+}

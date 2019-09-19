@@ -1,0 +1,228 @@
+<div class="container panel">
+    <div class="row">
+        <div class="col-sm-8 col-sm-offset-2 text-center">
+            <h1>System Configuration</h1>
+        </div>
+    </div>
+    <form name="systemConfigForm" (ngSubmit)="onSubmit(systemConfigForm)" #systemConfigForm="ngForm" novalidate>
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h3></h3>
+                    </div>
+                    <div class="col-sm-6">
+                        <h4 class="strong">System Configuration</h4>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-5">
+                                    <label>Instance ID</label>
+                                </div>
+                                <div class="col-sm-7">
+                                    <input type="text" class="form-control" name="Instance ID" [(ngModel)]="sysConfig['Instance ID']">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-5">
+                                    <label>Plmn ID</label>
+                                </div>
+                                <div class="col-sm-7">
+                                    <input type="text" class="form-control" name="Plmn ID" [(ngModel)]="sysConfig['Plmn ID']" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-5">
+                                    <label>SSL Certificate</label>
+
+                                </div>
+                                <div class="col-sm-7">
+                                    <input type="file" name="photo" name="SSL Certificate" (change)="fileChange($event)" />
+                                    <ul class="list-unstyled" *ngIf="!!sysConfig['SSL Certificate'] && sysConfig['SSL Certificate'].length > 0">
+                                        <li>File uploaded : {{checkFilename(sysConfig['SSL Certificate'])}}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-5">
+                                    <label>Thread count</label>
+                                </div>
+                                <div class="col-sm-7">
+                                    <input type="number" class="form-control" name="Sample Data  count" [(ngModel)]="sysConfig['Thread count']" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-5">
+                                    <label>Queue Size</label>
+                                </div>
+                                <div class="col-sm-7">
+                                    <input type="number" class="form-control" name="Queue Size" [(ngModel)]="sysConfig['Queue Size']" required>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-sm-8 col-sm-offset-2">
+                <div class="row ">
+                    <fieldset class="scheduler-border col-sm-12 feild-css">
+
+                        <legend class="feild-css">Server Info</legend>
+
+                        <div class="col-sm-12">
+                            <div class="form-group">
+
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <label>Group ID</label>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <input type="number" class="form-control" name="Group ID" [(ngModel)]="sysConfig['Group ID']" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <label>Routing Indicator</label>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" name="Routing Indicator" [(ngModel)]="sysConfig['Routing Indicator']" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-sm-12">
+                            <fieldset class="scheduler-border">
+                                <legend class="feild-css">Range Info</legend>
+                                <div class="form-group ">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <h4 class="radio-inline rangeIn">
+                                                <input type="radio" name="optradio" name="Range choice" value="Range" [(ngModel)]="sysConfig['Range choice']" (ngModelChange)="checkRadio()" />&nbsp;Range
+                                            </h4>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <h4 class="radio-inline">
+                                                <input type="radio" name="optradio" name="Range choice" value="Pattern" [(ngModel)]="sysConfig['Range choice']" (ngModelChange)="checkRadio()" />&nbsp;Pattern
+                                            </h4>
+                                        </div>
+                                    </div>
+                                    <div class="row rangeInfogroup" ngModelGroup="rangeInfogroup" #rangeInfogroup="ngModelGroup">
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-sm-5">
+                                                        <label>Start IMSI</label>
+                                                    </div>
+                                                    <div class="col-sm-7">
+                                                        <input type="number" class="form-control" name="Start" [(ngModel)]="sysConfig['Start']" #start="ngModel" [disabled]="sysConfig['Range choice'] == 'Pattern'" pattern="^0*(?:[1-9][0-9]?|100)$" min="1" max="100">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-sm-5">
+                                                        <label>End IMSI</label>
+                                                    </div>
+                                                    <div class="col-sm-7">
+                                                        <input type="number" class="form-control" name="End" [(ngModel)]="sysConfig['End']" #end="ngModel" [disabled]="sysConfig['Range choice'] == 'Pattern'" pattern="^0*(?:[1-9][0-9]?|100)$" min="1" max="100">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-sm-5">
+
+                                                        <label>Pattern</label>
+                                                    </div>
+
+                                                    <div class="col-sm-7">
+                                                        <input type="text" class="form-control" name="Pattern" [(ngModel)]="sysConfig['Pattern']" #pattern="ngModel" [disabled]="sysConfig['Range choice'] == 'Range'" pattern="^(imsi)\-(\d{11})">
+                                                        <h5><i>Sample Data (imsi-12345678906)</i></h5>
+                                                    </div>
+
+                                                </div>
+                                                <div class="row">
+
+                                                    <div class="col-sm-5">
+                                                        <button class="btn btn-primary btn-css " type="button" (click)="addRangeInfo(rangeInfogroup)" [disabled]="((!pattern.value && (!start.value || !end.value)) || !rangeInfogroup.valid)">
+                                                            <span *ngIf="!editRangeInfo">Add</span> 
+                                                            <span *ngIf="editRangeInfo">Update</span>
+    
+                                                        </button>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <button class="btn btn-default btn-css " *ngIf="editRangeInfo" type="button" (click)="cancelEdit()">
+                                                            cancel
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+                                    </div>
+
+                                    <table class="table table-bordered" *ngIf="!!sysConfig['RangeInfo'] && sysConfig['RangeInfo'].length >0 ">
+                                        <thead>
+                                            <tr>
+                                                <th>start</th>
+                                                <th>End</th>
+                                                <th>Pattern</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let rangeInfo of sysConfig['RangeInfo'];let i = index">
+                                                <td>{{rangeInfo.Start}}</td>
+                                                <td>{{rangeInfo.End}}</td>
+                                                <td>{{rangeInfo.Pattern}}</td>
+                                                <td class="text-center">
+                                                    <button type="button" class="edit btn btn-default" (click)="editid(i)" [disabled]="editRangeInfo"><i class="fas fa-pen"></i></button>&nbsp;
+                                                    <button type="button" class="delete btn btn-default" (click)="assignDeleteID(i)" [disabled]="editRangeInfo"><i
+                                                        class="fas fa-trash-alt"></i></button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+
+                            </fieldset>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="row">
+                    <div class="form-group text-center">
+                        <button type="submit" class="btn btn-primary submitBtn" [disabled]="(!systemConfigForm.valid || sysConfig['RangeInfo'].length <= 0) || editRangeInfo">Save</button>&nbsp;
+                        <!-- <button type="reset" class="btn btn-default">Cancel</button> -->
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<app-popup-modal [navOut]=""></app-popup-modal>
